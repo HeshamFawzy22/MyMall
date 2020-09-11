@@ -9,6 +9,7 @@ import com.example.mymall.adapters.HomePageAdapter;
 import com.example.mymall.models.HomePageModel;
 import com.example.mymall.models.HorizontalProductScrollModel;
 import com.example.mymall.models.SliderModel;
+import com.example.mymall.models.WishListItemModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static com.example.mymall.ui.HomeFragment.lists;
+import static com.example.mymall.ui.HomeFragment.loadCategoriesNames;
+import static com.example.mymall.ui.HomeFragment.loadFragmentData;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -33,18 +38,27 @@ public class CategoryActivity extends AppCompatActivity {
     private List<HomePageModel> categoryPageModelList;
 
     //////////////Category Recycler View
+
+    // Fake Lists
+    private List<HomePageModel> homepageModelFakeList = new ArrayList<>();
+    // Fake Lists
+
+    private String categoryName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
-        String categoryName = getIntent().getStringExtra("CategoryName");
+        categoryName = getIntent().getStringExtra("CategoryName");
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(categoryName);
 
         initHomePageRecyclerView();
+
+
+
         setCategoryPageModel();
     }
 
@@ -70,10 +84,10 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void setCategoryPageModel() {
-        setHorizontalProductModel();
+        /*setHorizontalProductModel();
         setSliderModel();
         categoryPageModelList = new ArrayList<>();
-        /*categoryPageModelList.add(new HomePageModel(0,sliderModelList));
+        categoryPageModelList.add(new HomePageModel(0,sliderModelList));
         categoryPageModelList.add(new HomePageModel(1,R.drawable.strip_ad,"#000000"));
         categoryPageModelList.add(new HomePageModel(0,sliderModelList));
         categoryPageModelList.add(new HomePageModel(0,sliderModelList));
@@ -94,11 +108,58 @@ public class CategoryActivity extends AppCompatActivity {
         categoryPageModelList.add(new HomePageModel(3,"Monday Deals!!!",horizontalProductScrollModelList));
         categoryPageModelList.add(new HomePageModel(3,"Monday Deals!!!",horizontalProductScrollModelList));*/
 
-        setCategoryPageAdapter();
+        // homepageModelFakeList
+        List<SliderModel> sliderModelFakeList = new ArrayList<>();
+        sliderModelFakeList.add(new SliderModel("null","#ffffff"));
+        sliderModelFakeList.add(new SliderModel("null","#ffffff"));
+        sliderModelFakeList.add(new SliderModel("null","#ffffff"));
+        sliderModelFakeList.add(new SliderModel("null","#ffffff"));
+        sliderModelFakeList.add(new SliderModel("null","#ffffff"));
+
+        List<HorizontalProductScrollModel>horizontalProductScrollFakeModel = new ArrayList<>();
+        horizontalProductScrollFakeModel.add(new HorizontalProductScrollModel("","","","",""));
+        horizontalProductScrollFakeModel.add(new HorizontalProductScrollModel("","","","",""));
+        horizontalProductScrollFakeModel.add(new HorizontalProductScrollModel("","","","",""));
+        horizontalProductScrollFakeModel.add(new HorizontalProductScrollModel("","","","",""));
+        horizontalProductScrollFakeModel.add(new HorizontalProductScrollModel("","","","",""));
+        horizontalProductScrollFakeModel.add(new HorizontalProductScrollModel("","","","",""));
+        horizontalProductScrollFakeModel.add(new HorizontalProductScrollModel("","","","",""));
+
+        homepageModelFakeList.add(new HomePageModel(0,sliderModelFakeList));
+        homepageModelFakeList.add(new HomePageModel(1,"","#ffffff"));
+        homepageModelFakeList.add(new HomePageModel(2,"","#ffffff",horizontalProductScrollFakeModel,new ArrayList<WishListItemModel>()));
+        homepageModelFakeList.add(new HomePageModel(3,"","#ffffff",horizontalProductScrollFakeModel));
+        // homepageModelFakeList
+
+        categoryPageAdapter = new HomePageAdapter(homepageModelFakeList);
+
+        loadSpecificFragmentData();
     }
 
-    private void setCategoryPageAdapter() {
-        HomePageAdapter categoryPageAdapter = new HomePageAdapter(categoryPageModelList);
+    private void loadSpecificFragmentData() {
+        int listPosition = 0;
+        for (int i = 0 ; i < loadCategoriesNames.size() ; i++){
+            if (loadCategoriesNames.get(i).equals(categoryName)){
+                listPosition = i;
+            }
+        }
+        if (listPosition == 0){
+            loadCategoriesNames.add(categoryName.toUpperCase());
+            lists.add(new ArrayList<HomePageModel>());
+            //categoryPageAdapter = new HomePageAdapter(lists.get(loadCategoriesNames.size() - 1));
+            loadFragmentData(categoryRecyclerView,this,loadCategoriesNames.size()-1,categoryName);
+        }else {
+            categoryPageAdapter = new HomePageAdapter(lists.get(listPosition));
+        }
+
+        categoryRecyclerView.setAdapter(categoryPageAdapter);
+        categoryPageAdapter.notifyDataSetChanged();
+
+        //setCategoryPageAdapter(listPosition);
+    }
+
+    private void setCategoryPageAdapter(int position) {
+        //categoryPageAdapter = new HomePageAdapter(lists.get(position));
         categoryRecyclerView.setAdapter(categoryPageAdapter);
         categoryPageAdapter.notifyDataSetChanged();
     }

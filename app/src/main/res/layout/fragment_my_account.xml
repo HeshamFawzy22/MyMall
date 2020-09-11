@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.MyAccountFragment">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -14,6 +14,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:orientation="vertical">
+
+            <include layout="@layout/user_profile_layout" />
+
+            <include layout="@layout/order_status_layout" />
+
+            <include layout="@layout/your_recent_order_layout" />
+
+            <include layout="@layout/my_addresses_layout" />
 
             <Button
                 android:id="@+id/button"
@@ -28,14 +36,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <include layout="@layout/order_status_layout" />
-
-            <include layout="@layout/your_recent_order_layout" />
-
-            <include layout="@layout/my_addresses_layout" />
-
-            <include layout="@layout/user_profile_layout" />
-
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>

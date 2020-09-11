@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/product_details_tabs_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="3dp">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/cod_indecator"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginEnd="16dp"
@@ -30,14 +31,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_title">
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
-            android:src="@drawable/star" />
-
         <TextView
             android:id="@+id/tv_product_rating_mini_view"
             android:layout_width="match_parent"
@@ -47,6 +40,14 @@
             android:text="4.5"
             android:textColor="@color/colorAccent"
             android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:src="@drawable/star" />
 
     </LinearLayout>
 
@@ -63,6 +64,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_price">
 
+        <TextView
+            android:id="@+id/tv_coupen_redemption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Check price after coupen redemption"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent" />
         <Button
             android:id="@+id/coupen_redemption_btn"
             android:layout_width="75dp"
@@ -72,16 +81,6 @@
             android:textColor="@color/colorAccent"
 
             />
-
-        <TextView
-            android:id="@+id/tv_coupen_redemption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Check price after coupen redemption"
-            android:textAlignment="center"
-            android:textColor="@color/colorAccent" />
-
     </LinearLayout>
 
     <TextView
@@ -137,9 +136,9 @@
         android:layout_marginTop="4dp"
         android:text="Available"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintEnd_toEndOf="@+id/cod_indecator"
+        app:layout_constraintStart_toStartOf="@+id/cod_indecator"
+        app:layout_constraintTop_toBottomOf="@+id/cod_indecator" />
 
     <View
         android:id="@+id/divider3"

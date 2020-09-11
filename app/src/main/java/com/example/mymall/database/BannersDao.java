@@ -7,9 +7,9 @@ public class BannersDao {
     public static final String HOME_DOCUMENT = "HOME";
     public static final String INDEX = "index";
 
-    public static void getBanners(OnCompleteListener<QuerySnapshot> onCompleteListener) {
+    public static void getBanners(OnCompleteListener<QuerySnapshot> onCompleteListener , String categoryName) {
         MyDatabase.getCategoriesReferences()
-                .document(HOME_DOCUMENT)
+                .document(categoryName.toUpperCase())
                 .collection(MyDatabase.TOP_DEALS_BRANCH)
                 .orderBy(INDEX)
                 .get()

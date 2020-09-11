@@ -18,6 +18,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.mymall.adapters.GridProductLayoutAdapter.PRODUCT_ID;
+
 public class HorizontalProductScrollAdapter extends RecyclerView.Adapter<HorizontalProductScrollAdapter.ViewHolder> {
 
     private List<HorizontalProductScrollModel> productScrollAdapterList;
@@ -39,11 +41,9 @@ public class HorizontalProductScrollAdapter extends RecyclerView.Adapter<Horizon
         String title = productScrollAdapterList.get(position).getProductTitle();
         String description = productScrollAdapterList.get(position).getProductDescription();
         String price = productScrollAdapterList.get(position).getProductPrice();
+        String productId = productScrollAdapterList.get(position).getProductId();
 
-        holder.setProductImage(resource);
-        holder.setProductDescription(description);
-        holder.setProductPrice(price);
-        holder.setProductTitle(title);
+        holder.setData(productId , resource , description , price , title);
     }
 
     @Override
@@ -52,12 +52,7 @@ public class HorizontalProductScrollAdapter extends RecyclerView.Adapter<Horizon
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.getContext().startActivity(new Intent(v.getContext(), ProductDetailsActivity.class));
-            }
-        };
+
         private ImageView productImage;
         private TextView productTitle;
         private TextView productDescription;
@@ -70,25 +65,26 @@ public class HorizontalProductScrollAdapter extends RecyclerView.Adapter<Horizon
             productPrice = itemView.findViewById(R.id.h_s_item_price);
             productDescription = itemView.findViewById(R.id.h_s_item_description);
 
-            itemView.setOnClickListener(onClickListener);
         }
 
-        private void setProductImage(String resource) {
+        private void setData(final String productId , String resource , String title , String description , String price) {
             //productImage.setImageResource(resource);
             Glide.with(itemView.getContext()).load(resource)
-                    .apply(new RequestOptions().placeholder(R.drawable.ic_home)).into(productImage);
-        }
-
-        private void setProductTitle(String title) {
+                    .apply(new RequestOptions().placeholder(R.drawable.null_icon)).into(productImage);
             productTitle.setText(title);
-        }
-
-        private void setProductDescription(String description) {
             productDescription.setText(description);
-        }
-
-        private void setProductPrice(String price) {
             productPrice.setText("Rs." + price + "/-");
+
+            if (!title.equals("")) {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), ProductDetailsActivity.class);
+                        intent.putExtra(PRODUCT_ID , productId);
+                        v.getContext().startActivity(intent);
+                    }
+                });
+            }
         }
     }
 }

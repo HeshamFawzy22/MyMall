@@ -21,6 +21,7 @@ import java.util.List;
 import androidx.annotation.RequiresApi;
 
 public class GridProductLayoutAdapter extends BaseAdapter {
+    public static final String PRODUCT_ID = "PRODUCT_ID";
 
     List<HorizontalProductScrollModel> gridProductModelList;
 
@@ -53,7 +54,7 @@ public class GridProductLayoutAdapter extends BaseAdapter {
             view.setBackgroundColor(Color.parseColor("#ffffff"));
 
             //on item click go to ProductDetailsActivity
-            startProductDetailsActivity(view, parent);
+            startProductDetailsActivity(view, parent , position);
 
             ImageView productImage = view.findViewById(R.id.h_s_item_image);
             TextView productTitle = view.findViewById(R.id.h_s_item_title);
@@ -61,7 +62,7 @@ public class GridProductLayoutAdapter extends BaseAdapter {
             TextView productDescription = view.findViewById(R.id.h_s_item_description);
 
             //productImage.setImageResource(gridProductModelList.get(position).getProductImage());
-            Glide.with(parent.getContext()).load(gridProductModelList.get(position).getProductImage()).apply(new RequestOptions().placeholder(R.drawable.ic_home)).into(productImage);
+            Glide.with(parent.getContext()).load(gridProductModelList.get(position).getProductImage()).apply(new RequestOptions().placeholder(R.drawable.null_icon)).into(productImage);
             productTitle.setText(gridProductModelList.get(position).getProductTitle());
             productDescription.setText(gridProductModelList.get(position).getProductDescription());
             productPrice.setText("Rs." + gridProductModelList.get(position).getProductPrice() + "-/");
@@ -72,11 +73,13 @@ public class GridProductLayoutAdapter extends BaseAdapter {
         return view;
     }
 
-    private void startProductDetailsActivity(View view, final ViewGroup parent) {
+    private void startProductDetailsActivity(View view, final ViewGroup parent , final int position) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parent.getContext().startActivity(new Intent(parent.getContext(), ProductDetailsActivity.class));
+                Intent intent = new Intent(parent.getContext(),ProductDetailsActivity.class);
+                intent.putExtra(PRODUCT_ID , gridProductModelList.get(position).getProductId());
+                parent.getContext().startActivity(intent);
             }
         });
     }

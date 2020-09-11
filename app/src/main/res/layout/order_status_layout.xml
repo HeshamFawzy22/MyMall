@@ -25,29 +25,6 @@
             android:translationX="12dp"
             app:srcCompat="@drawable/default_dot" />
 
-        <ImageView
-            android:id="@+id/packed_indicator"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:tint="@color/recyclerViewBackground"
-            android:translationX="4dp"
-            app:srcCompat="@drawable/default_dot" />
-
-        <ImageView
-            android:id="@+id/shipped_indicator"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:tint="@color/recyclerViewBackground"
-            android:translationX="-8dp"
-            app:srcCompat="@drawable/default_dot" />
-
-        <ImageView
-            android:id="@+id/delivered_indecator"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:tint="@color/recyclerViewBackground"
-            android:translationX="-16dp"
-            app:srcCompat="@drawable/default_dot" />
 
         <ProgressBar
             android:id="@+id/order_packed_progress"
@@ -60,6 +37,32 @@
             android:progressTint="@color/successGreen"
             android:translationX="8dp" />
 
+        <ImageView
+            android:id="@+id/packed_indicator"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:tint="@color/recyclerViewBackground"
+            android:translationX="4dp"
+            app:srcCompat="@drawable/default_dot" />
+
+        <ProgressBar
+            android:id="@+id/packed_shipped_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:progress="0"
+            android:progressBackgroundTint="@color/recyclerViewBackground"
+            android:progressTint="@color/successGreen" />
+
+        <ImageView
+            android:id="@+id/shipped_indicator"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:tint="@color/recyclerViewBackground"
+            android:translationX="-8dp"
+            app:srcCompat="@drawable/default_dot" />
+
         <ProgressBar
             android:id="@+id/shipped_delivered_progress"
             style="?android:attr/progressBarStyleHorizontal"
@@ -71,16 +74,13 @@
             android:progressTint="@color/successGreen"
             android:translationX="-12dp" />
 
-        <ProgressBar
-            android:id="@+id/packed_shipped_progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_weight="1"
-            android:progress="0"
-            android:progressBackgroundTint="@color/recyclerViewBackground"
-            android:progressTint="@color/successGreen" />
+        <ImageView
+            android:id="@+id/delivered_indecator"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:tint="@color/recyclerViewBackground"
+            android:translationX="-16dp"
+            app:srcCompat="@drawable/default_dot" />
 
     </LinearLayout>
 

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 public class ProductDescriptionFragment extends Fragment {
 
     protected TextView tvProductDescription;
+    public String body;
 
     public ProductDescriptionFragment() {
         // Required empty public constructor
@@ -24,8 +25,9 @@ public class ProductDescriptionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_description, container, false);
-
         initView(view);
+
+        tvProductDescription.setText(body);
         return view;
     }
 

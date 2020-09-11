@@ -41,16 +41,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coupens_applied">
 
-        <Button
-            android:id="@+id/coupen_redemption_btn"
-            android:layout_width="75dp"
-            android:layout_height="30dp"
-            android:background="@drawable/redeem_background_btn"
-            android:text="Redeem"
-            android:textColor="@color/colorAccent"
-
-            />
-
         <TextView
             android:id="@+id/tv_coupen_redemption"
             android:layout_width="wrap_content"
@@ -59,6 +49,14 @@
             android:text="Check price after coupen redemption"
             android:textAlignment="center"
             android:textColor="@color/colorAccent" />
+        <Button
+            android:id="@+id/coupen_redemption_btn"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:background="@drawable/redeem_background_btn"
+            android:text="Redeem"
+            android:textColor="@color/colorAccent"
+            />
 
     </LinearLayout>
 

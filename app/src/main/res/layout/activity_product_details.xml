@@ -17,20 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/buy_now_btn"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:stateListAnimator="@null"
-            android:text="BUY NOW"
-            android:textColor="@color/colorAccent"
 
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:targetApi="lollipop" />
 
         <LinearLayout
             android:id="@+id/add_to_cart_btn"
@@ -42,21 +29,36 @@
             android:orientation="horizontal"
             android:padding="16dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="ADD TO CART"
+                android:layout_marginStart="4dp"
+                android:textColor="#485f70"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/my_cart"
                 android:tint="#485f70" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:text="ADD TO CART"
-                android:textColor="#485f70"
-                android:textSize="16sp"
-                android:textStyle="bold" />
         </LinearLayout>
+        <Button
+            android:id="@+id/buy_now_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:stateListAnimator="@null"
+            android:text="BUY NOW"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:targetApi="lollipop" />
 
     </LinearLayout>
 

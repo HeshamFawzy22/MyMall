@@ -36,25 +36,6 @@
         app:layout_constraintTop_toTopOf="@+id/grid_product_layout_viewAll_btn" />
 
 
-    <View
-        android:id="@+id/divider20"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/recyclerViewBackground"
-        app:layout_constraintBottom_toBottomOf="@+id/grid_layout"
-        app:layout_constraintEnd_toEndOf="@+id/grid_layout"
-        app:layout_constraintStart_toStartOf="@+id/grid_layout"
-        app:layout_constraintTop_toTopOf="@+id/grid_layout" />
-
-    <View
-        android:id="@+id/divider21"
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:background="@color/recyclerViewBackground"
-        app:layout_constraintBottom_toBottomOf="@+id/grid_layout"
-        app:layout_constraintEnd_toEndOf="@+id/divider20"
-        app:layout_constraintStart_toStartOf="@+id/divider20"
-        app:layout_constraintTop_toTopOf="@+id/grid_layout" />
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/grid_layout"
@@ -86,5 +67,25 @@
             app:layout_columnWeight="1" />
 
     </androidx.gridlayout.widget.GridLayout>
+
+    <View
+        android:id="@+id/divider20"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/recyclerViewBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/grid_layout"
+        app:layout_constraintEnd_toEndOf="@+id/grid_layout"
+        app:layout_constraintStart_toStartOf="@+id/grid_layout"
+        app:layout_constraintTop_toTopOf="@+id/grid_layout" />
+
+    <View
+        android:id="@+id/divider21"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/recyclerViewBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/grid_layout"
+        app:layout_constraintEnd_toEndOf="@+id/divider20"
+        app:layout_constraintStart_toStartOf="@+id/divider20"
+        app:layout_constraintTop_toTopOf="@+id/grid_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

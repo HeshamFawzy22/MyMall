@@ -1,7 +1,10 @@
 package com.example.mymall.adapters;
 
+import com.example.mymall.models.ProductSpecificationModel;
 import com.example.mymall.ui.ProductDescriptionFragment;
 import com.example.mymall.ui.ProductSpecificationFragment;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,11 +14,17 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class ProductDetailsViewPagerAdapter extends FragmentPagerAdapter {
 
-    int totalTabs;
+    private int totalTabs;
+    private String productDescription;
+    private String productOtherDetails;
+    private List<ProductSpecificationModel> specificationModelList;
 
-    public ProductDetailsViewPagerAdapter(@NonNull FragmentManager fm, int totalTabs) {
+    public ProductDetailsViewPagerAdapter(@NonNull FragmentManager fm, int totalTabs, String productDescription, String productOtherDetails, List<ProductSpecificationModel> specificationModelList) {
         super(fm);
         this.totalTabs = totalTabs;
+        this.productDescription = productDescription;
+        this.productOtherDetails = productOtherDetails;
+        this.specificationModelList = specificationModelList;
     }
 
     @NonNull
@@ -25,13 +34,17 @@ public class ProductDetailsViewPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 fragment = new ProductDescriptionFragment();
+                ((ProductDescriptionFragment) fragment).body = productDescription;
                 break;
             case 1:
                 fragment = new ProductSpecificationFragment();
+                ((ProductSpecificationFragment) fragment).specificationModelList = specificationModelList;
                 break;
             case 2:
                 fragment = new ProductDescriptionFragment();
+                ((ProductDescriptionFragment) fragment).body = productOtherDetails;
                 break;
+
             default:
                 fragment = null;
         }
