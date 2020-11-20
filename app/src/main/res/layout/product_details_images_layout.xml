@@ -21,21 +21,20 @@
         android:id="@+id/selected_coupen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/slider_background"
         android:backgroundTint="@color/successGreen"
         android:orientation="horizontal"
         android:paddingStart="2dp"
         android:paddingEnd="2dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/product_title"
         app:layout_constraintTop_toBottomOf="@+id/product_title">
 
         <TextView
             android:id="@+id/tv_product_rating_mini_view"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="4dp"
             android:layout_marginEnd="2dp"
             android:text="4.5"
             android:textColor="@color/colorAccent"
@@ -48,6 +47,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginEnd="2dp"
             android:src="@drawable/star" />
+
 
     </LinearLayout>
 

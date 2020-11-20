@@ -16,6 +16,7 @@ import com.example.mymall.adapters.CategoryAdapter;
 import com.example.mymall.adapters.HomePageAdapter;
 import com.example.mymall.database.BannersDao;
 import com.example.mymall.database.CategoriesDao;
+import com.example.mymall.database.UserDao;
 import com.example.mymall.models.CategoryModel;
 import com.example.mymall.models.HomePageModel;
 import com.example.mymall.models.HorizontalProductScrollModel;
@@ -57,7 +58,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     ////////////Category Recycler View
 
-    private List<CategoryModel> categoryModelList = new ArrayList<>();
+    public static List<CategoryModel> categoryModelList = new ArrayList<>();
     //private List<SliderModel> sliderModelList;
     //private List<HorizontalProductScrollModel> horizontalProductScrollModelList;
     //private List<WishListItemModel> viewAllProductList;
@@ -76,7 +77,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     //refresh layout
 
     public static List<List<HomePageModel>> lists = new ArrayList<>();
-    public static List<String> loadCategoriesNames = new ArrayList<>();
+    public static List<String> loadedCategoriesNames = new ArrayList<>();
 
     public HomeFragment() {
     }
@@ -153,7 +154,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void checkInternetConnection() {
-        if (isNetworkConnected()) {
+        if (isNetworkConnected(getContext())) {
             MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             categoryRecyclerView.setVisibility(View.VISIBLE);
             homeRecyclerView.setVisibility(View.VISIBLE);
@@ -169,7 +170,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             categoryRecyclerView.setAdapter(categoryAdapter);
 
             if (lists.size() == 0) {
-                loadCategoriesNames.add("HOME");
+                loadedCategoriesNames.add("HOME");
                 lists.add(new ArrayList<HomePageModel>());
 
                 homePageAdapter = new HomePageAdapter(lists.get(0));
@@ -202,11 +203,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void retryConnect(){
         swipeRefreshLayout.setRefreshing(true);
-        categoryModelList.clear();
-        lists.clear();
-        loadCategoriesNames.clear();
+//        categoryModelList.clear();
+//        lists.clear();
+//        loadedCategoriesNames.clear();
+        clearData();
 
-        if (isNetworkConnected()) {
+        if (isNetworkConnected(getContext())) {
             MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             categoryRecyclerView.setVisibility(View.VISIBLE);
             homeRecyclerView.setVisibility(View.VISIBLE);
@@ -220,7 +222,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             setCategoryModel();
 
-            loadCategoriesNames.add("HOME");
+            loadedCategoriesNames.add("HOME");
             lists.add(new ArrayList<HomePageModel>());
 
             loadFragmentData(homeRecyclerView, getContext(), 0, "HOME");
@@ -239,8 +241,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
@@ -321,6 +323,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //        categoryModelList.add(new CategoryModel("IconLink","Books"));
 //        categoryModelList.add(new CategoryModel("IconLink","Shoes"));
         //categoryModelList = new ArrayList<>();
+        categoryModelList.clear();
         CategoriesDao.getCategories(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -412,14 +415,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     , documentSnapshot.get("product_subtitle_" + i).toString()
                     , documentSnapshot.get("product_price_" + i).toString()));
 
-            viewAllProductList.add(new WishListItemModel(documentSnapshot.get("product_image_" + i).toString()
+            viewAllProductList.add(new WishListItemModel(documentSnapshot.get("product_id_" + i).toString()
+                    , documentSnapshot.get("product_image_" + i).toString()
                     , documentSnapshot.get("product_full_title_" + i).toString()
                     , (long) documentSnapshot.get("free_coupens_" + i)
                     , documentSnapshot.get("average_rating_" + i).toString()
                     , (long) documentSnapshot.get("total_ratings_" + i)
                     , documentSnapshot.get("product_price_" + i).toString()
                     , documentSnapshot.get("cutted_price_" + i).toString()
-                    , (boolean) documentSnapshot.get("COD_" + i)));
+                    , (boolean) documentSnapshot.get("COD_" + i)
+                    , (boolean) documentSnapshot.get("in_stock_" + i)));
         }
         lists.get(index).add(new HomePageModel(2, documentSnapshot.get("layout_title").toString()
                 , documentSnapshot.get("layout_background").toString(), horizontalProductScrollModelList, viewAllProductList));
@@ -439,6 +444,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+    public static void clearData(){
+        categoryModelList.clear();
+        lists.clear();
+        loadedCategoriesNames.clear();
+        ProductDetailsActivity.wishList.clear();
+        ProductDetailsActivity.wishListModelList.clear();
+        ProductDetailsActivity.cartList.clear();
+        ProductDetailsActivity.cartItemModelList.clear();
+        UserDao.myRatedIds.clear();
+        UserDao.myRating.clear();
+        AddAddressActivity.addressesModelList.clear();
     }
 
     @Override

@@ -1,17 +1,21 @@
 package com.example.mymall.adapters;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mymall.R;
 import com.example.mymall.models.WishListItemModel;
+import com.example.mymall.ui.HomeFragment;
 import com.example.mymall.ui.ProductDetailsActivity;
 
 import java.util.List;
@@ -19,11 +23,13 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.MyWishlistViewHolder> {
 
 
     private List<WishListItemModel> wishListItemModelList;
     private Boolean isWishlist;
+    private int lastPosition = -1;
 
     public WishListAdapter(List<WishListItemModel> wishListItemModelList, Boolean isWishlist) {
         this.wishListItemModelList = wishListItemModelList;
@@ -40,6 +46,7 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.MyWish
     @Override
     public void onBindViewHolder(@NonNull MyWishlistViewHolder holder, int position) {
         WishListItemModel wishlistModel = wishListItemModelList.get(position);
+        String productId = wishlistModel.getProductId();
         String resource = wishlistModel.getProductImage();
         String title = wishlistModel.getProductTitle();
         long freeCoupen = wishlistModel.getFreeCoupens();
@@ -48,8 +55,16 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.MyWish
         String price = wishlistModel.getProductPrice();
         String cuttedPrice = wishlistModel.getCuttedPrice();
         boolean COD = wishlistModel.isCOD();
+        boolean inStock = wishlistModel.isInStock();
 
-        holder.setData(resource, title, freeCoupen, rating, totalRatings, price, cuttedPrice, COD);
+        holder.setData(productId , resource, title, freeCoupen, rating, totalRatings, price, cuttedPrice, COD , position , inStock);
+
+        //Enter Animation
+        if (lastPosition < position){
+            Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(),R.anim.fade_in);
+            holder.itemView.setAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     @Override
@@ -85,26 +100,43 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.MyWish
             paymentMethod = (TextView) itemView.findViewById(R.id.payment_method);
         }
 
-        void setData(String resource, String title, long freeCoupenNo, String averageRate, long totalRatingsValue, String price, String cuttedPriceValue, boolean COD) {
-            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.ic_home)).into(productImage);
+        void setData(final String productId , String resource, String title, long freeCoupenNo, String averageRate, long totalRatingsValue, final String price, String cuttedPriceValue, boolean COD , final int index , boolean inStock) {
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.null_icon)).into(productImage);
             productTitle.setText(title);
-            if (freeCoupenNo > 0) {
+            if (freeCoupenNo > 0 && inStock) {
                 coupenIcon.setVisibility(View.VISIBLE);
                 freeCoupen.setText("free " + freeCoupenNo + " coupen");
             } else {
                 freeCoupen.setVisibility(View.GONE);
                 coupenIcon.setVisibility(View.GONE);
             }
-            rating.setText(averageRate);
-            totalRatings.setText("(" + totalRatingsValue + ")" + "ratings");
-            productPrice.setText("RS." + price + "/-");
-            cuttedPrice.setText("Rs." + cuttedPriceValue + "/-");
+            LinearLayout linearLayout = (LinearLayout) rating.getParent();
+            if (inStock){
+                rating.setVisibility(View.VISIBLE);
+                totalRatings.setVisibility(View.VISIBLE);
+                productPrice.setTextColor(Color.parseColor("#000000"));
+                cuttedPrice.setVisibility(View.VISIBLE);
+                linearLayout.setVisibility(View.VISIBLE);
+                rating.setText(averageRate);
+                totalRatings.setText("(" + totalRatingsValue + ")" + " ratings");
+                productPrice.setText("RS." + price + "/-");
+                cuttedPrice.setText("Rs." + cuttedPriceValue + "/-");
 
-            if (COD) {
-                paymentMethod.setVisibility(View.VISIBLE);
-            } else {
+                if (COD) {
+                    paymentMethod.setVisibility(View.VISIBLE);
+                } else {
+                    paymentMethod.setVisibility(View.INVISIBLE);
+                }
+            }else {
+                linearLayout.setVisibility(View.INVISIBLE);
+                rating.setVisibility(View.INVISIBLE);
+                totalRatings.setVisibility(View.INVISIBLE);
                 paymentMethod.setVisibility(View.INVISIBLE);
+                productPrice.setText("Out of stock");
+                productPrice.setTextColor(itemView.getContext().getResources().getColor(R.color.colorPrimary));
+                cuttedPrice.setVisibility(View.INVISIBLE);
             }
+
 
             if (isWishlist) {
                 deleteIcon.setVisibility(View.VISIBLE);
@@ -114,14 +146,19 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.MyWish
             deleteIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "deleted", Toast.LENGTH_SHORT).show();
+                    if (HomeFragment.isNetworkConnected(itemView.getContext())) {
+                        deleteIcon.setEnabled(false);
+                        ProductDetailsActivity.removeProductFromWishlist(index, itemView.getContext());
+                    }
                 }
             });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemView.getContext().startActivity(new Intent(itemView.getContext(), ProductDetailsActivity.class));
+                    Intent intent = new Intent(itemView.getContext(), ProductDetailsActivity.class);
+                    intent.putExtra("PRODUCT_ID" , productId);
+                    itemView.getContext().startActivity(intent);
                 }
             });
         }

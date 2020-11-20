@@ -10,7 +10,7 @@ public class BannersDao {
     public static void getBanners(OnCompleteListener<QuerySnapshot> onCompleteListener , String categoryName) {
         MyDatabase.getCategoriesReferences()
                 .document(categoryName.toUpperCase())
-                .collection(MyDatabase.TOP_DEALS_BRANCH)
+                .collection(MyDatabase.TOP_DEALS)
                 .orderBy(INDEX)
                 .get()
                 .addOnCompleteListener(onCompleteListener);

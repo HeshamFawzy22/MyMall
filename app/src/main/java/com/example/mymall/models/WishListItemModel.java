@@ -1,17 +1,19 @@
 package com.example.mymall.models;
 
 public class WishListItemModel {
-
+    private String productId;
     private String productImage;
     private String productTitle;
-    private long freeCoupens;
+    private Long freeCoupens;
     private String rating;
     private long totalRating;
     private String productPrice;
     private String cuttedPrice;
     private boolean COD;
+    private boolean inStock;
 
-    public WishListItemModel(String productImage, String productTitle, long freeCoupens, String rating, long totalRating, String productPrice, String cuttedPrice, boolean COD) {
+    public WishListItemModel(String productId , String productImage, String productTitle, long freeCoupens, String rating, long totalRating, String productPrice, String cuttedPrice, boolean COD , boolean inStock) {
+        this.productId = productId;
         this.productImage = productImage;
         this.productTitle = productTitle;
         this.freeCoupens = freeCoupens;
@@ -20,6 +22,23 @@ public class WishListItemModel {
         this.productPrice = productPrice;
         this.cuttedPrice = cuttedPrice;
         this.COD = COD;
+        this.inStock = inStock;
+    }
+
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getProductImage() {

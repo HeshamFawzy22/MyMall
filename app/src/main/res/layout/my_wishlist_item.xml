@@ -52,6 +52,16 @@
         app:layout_constraintStart_toStartOf="@+id/coupen_icon"
         app:layout_constraintTop_toBottomOf="@+id/coupen_icon">
 
+        <TextView
+            android:id="@+id/tv_product_rating_mini_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="2dp"
+            android:text="4.5"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold" />
+
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
@@ -60,15 +70,6 @@
             android:layout_marginEnd="2dp"
             android:src="@drawable/star" />
 
-        <TextView
-            android:id="@+id/tv_product_rating_mini_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="2dp"
-            android:text="4.5"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold" />
 
     </LinearLayout>
 

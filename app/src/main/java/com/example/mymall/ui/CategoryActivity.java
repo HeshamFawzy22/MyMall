@@ -21,8 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.example.mymall.ui.HomeFragment.lists;
-import static com.example.mymall.ui.HomeFragment.loadCategoriesNames;
 import static com.example.mymall.ui.HomeFragment.loadFragmentData;
+import static com.example.mymall.ui.HomeFragment.loadedCategoriesNames;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -138,16 +138,16 @@ public class CategoryActivity extends AppCompatActivity {
 
     private void loadSpecificFragmentData() {
         int listPosition = 0;
-        for (int i = 0 ; i < loadCategoriesNames.size() ; i++){
-            if (loadCategoriesNames.get(i).equals(categoryName)){
+        for (int i = 0 ; i < loadedCategoriesNames.size() ; i++){
+            if (loadedCategoriesNames.get(i).equals(categoryName)){
                 listPosition = i;
             }
         }
         if (listPosition == 0){
-            loadCategoriesNames.add(categoryName.toUpperCase());
+            loadedCategoriesNames.add(categoryName.toUpperCase());
             lists.add(new ArrayList<HomePageModel>());
-            //categoryPageAdapter = new HomePageAdapter(lists.get(loadCategoriesNames.size() - 1));
-            loadFragmentData(categoryRecyclerView,this,loadCategoriesNames.size()-1,categoryName);
+            //categoryPageAdapter = new HomePageAdapter(lists.get(loadedCategoriesNames.size() - 1));
+            loadFragmentData(categoryRecyclerView,this,loadedCategoriesNames.size()-1,categoryName);
         }else {
             categoryPageAdapter = new HomePageAdapter(lists.get(listPosition));
         }

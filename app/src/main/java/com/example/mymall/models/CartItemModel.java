@@ -1,28 +1,32 @@
 package com.example.mymall.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CartItemModel {
     public static final int CART_ITEM = 0;
     public static final int CART_TOTAL_AMOUNT = 1;
 
     private int type;
     /////cart item model
-    private int productImage;
+    private String productId;
+    private String productImage;
     private String productTitle;
-    private int freeCoupens;
+    private Long freeCoupens;
     private String productPrice;
     private String cuttedPrice;
-    private int productQuantity;
-    private int offersApplied;
-    private int coupensApplied;
-    /////cart total model
-    private String totalItems;
-    private String totalItemsPrice;
-    private String deliveryPrice;
-    private String totalAmount;
-    private String savedAmount;
+    private Long productQuantity;
+    private Long maxQuantity;
+    private Long stockQuantity;
+    private Long offersApplied;
+    private Long coupensApplied;
+    private boolean inStock;
+    private List<String> qtyIds;
 
-    public CartItemModel(int type, int productImage, String productTitle, int freeCoupens, String productPrice, String cuttedPrice, int productQuantity, int offersApplied, int coupensApplied) {
+
+    public CartItemModel(int type, String productId,  String productImage, String productTitle, Long freeCoupens, String productPrice, String cuttedPrice, Long productQuantity, Long offersApplied, Long coupensApplied , boolean inStock , Long maxQuantity , Long stockQuantity) {
         this.type = type;
+        this.productId = productId;
         this.productImage = productImage;
         this.productTitle = productTitle;
         this.freeCoupens = freeCoupens;
@@ -31,15 +35,42 @@ public class CartItemModel {
         this.productQuantity = productQuantity;
         this.offersApplied = offersApplied;
         this.coupensApplied = coupensApplied;
+        this.inStock = inStock;
+        this.maxQuantity = maxQuantity;
+        this.stockQuantity = stockQuantity;
+        qtyIds = new ArrayList<>();
     }
 
-    public CartItemModel(int type, String totalItems, String totalItemsPrice, String deliveryPrice, String totalAmount, String savedAmount) {
-        this.type = type;
-        this.totalItems = totalItems;
-        this.totalItemsPrice = totalItemsPrice;
-        this.deliveryPrice = deliveryPrice;
-        this.totalAmount = totalAmount;
-        this.savedAmount = savedAmount;
+    public Long getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(Long stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    public List<String> getQtyIds() {
+        return qtyIds;
+    }
+
+    public void setQtyIds(List<String> qtyIds) {
+        this.qtyIds = qtyIds;
+    }
+
+    public Long getMaxQuantity() {
+        return maxQuantity;
+    }
+
+    public void setMaxQuantity(Long maxQuantity) {
+        this.maxQuantity = maxQuantity;
+    }
+
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
     }
 
     public int getType() {
@@ -50,11 +81,19 @@ public class CartItemModel {
         this.type = type;
     }
 
-    public int getProductImage() {
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getProductImage() {
         return productImage;
     }
 
-    public void setProductImage(int productImage) {
+    public void setProductImage(String productImage) {
         this.productImage = productImage;
     }
 
@@ -66,11 +105,11 @@ public class CartItemModel {
         this.productTitle = productTitle;
     }
 
-    public int getFreeCoupens() {
+    public Long getFreeCoupens() {
         return freeCoupens;
     }
 
-    public void setFreeCoupens(int freeCoupens) {
+    public void setFreeCoupens(Long freeCoupens) {
         this.freeCoupens = freeCoupens;
     }
 
@@ -92,68 +131,33 @@ public class CartItemModel {
 
     /////cart item model
 
-    public int getProductQuantity() {
+    public Long getProductQuantity() {
         return productQuantity;
     }
 
-    public void setProductQuantity(int productQuantity) {
+    public void setProductQuantity(Long productQuantity) {
         this.productQuantity = productQuantity;
     }
 
-    public int getOffersApplied() {
+    public Long getOffersApplied() {
         return offersApplied;
     }
 
-    public void setOffersApplied(int offersApplied) {
+    public void setOffersApplied(Long offersApplied) {
         this.offersApplied = offersApplied;
     }
 
-    public int getCoupensApplied() {
+    public Long getCoupensApplied() {
         return coupensApplied;
     }
 
-    public void setCoupensApplied(int coupensApplied) {
+    public void setCoupensApplied(Long coupensApplied) {
         this.coupensApplied = coupensApplied;
     }
 
-    public String getTotalItems() {
-        return totalItems;
-    }
-
-    public void setTotalItems(String totalItems) {
-        this.totalItems = totalItems;
-    }
-
-    public String getTotalItemsPrice() {
-        return totalItemsPrice;
-    }
-
-    public void setTotalItemsPrice(String totalItemsAmount) {
-        this.totalItemsPrice = totalItemsAmount;
-    }
-
-    public String getDeliveryPrice() {
-        return deliveryPrice;
-    }
-
-    public void setDeliveryPrice(String deliveryPrice) {
-        this.deliveryPrice = deliveryPrice;
-    }
-
-    public String getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(String totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public String getSavedAmount() {
-        return savedAmount;
-    }
-
-    public void setSavedAmount(String savedAmount) {
-        this.savedAmount = savedAmount;
+    /////cart total model
+    public CartItemModel(int type) {
+        this.type = type;
     }
     /////cart total model
 }

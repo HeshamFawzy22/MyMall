@@ -1,6 +1,7 @@
 package com.example.mymall.adapters;
 
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.mymall.ui.ProductDetailsActivity;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.example.mymall.adapters.GridProductLayoutAdapter.PRODUCT_ID;
@@ -77,6 +79,7 @@ public class HorizontalProductScrollAdapter extends RecyclerView.Adapter<Horizon
 
             if (!title.equals("")) {
                 itemView.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(v.getContext(), ProductDetailsActivity.class);

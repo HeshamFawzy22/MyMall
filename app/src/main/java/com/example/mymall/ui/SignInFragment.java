@@ -72,7 +72,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (view.getId() == R.id.sign_in_btn) {
             if (validatedForm()) {
-                btnSignIn.setEnabled(false);
                 logIn();
             }
         } else if (view.getId() == R.id.sign_in_tv_forget_password) {
@@ -87,6 +86,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
 
     private void logIn() {
+        btnSignIn.setEnabled(false);
+        btnSignIn.setTextColor(Color.argb(50,255,255,255));
         auth = FirebaseAuth.getInstance();
         String emailText = etEmail.getEditText().getText().toString().trim();
         String passwordText = etPassword.getEditText().getText().toString().trim();
@@ -96,8 +97,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            btnSignIn.setEnabled(false);
-                            btnSignIn.setTextColor(Color.argb(50,255,255,255));
                             progressBar.setVisibility(View.INVISIBLE);
                             startMainActivity();
                         } else {

@@ -22,14 +22,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import static com.example.mymall.database.MyDatabase.USERS_BRANCH;
+import static com.example.mymall.database.UserDao.USER_DATA;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
 
@@ -141,10 +148,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     }
 
     private void registerUser() {
-        auth = FirebaseAuth.getInstance();
-        progressBar.setVisibility(View.VISIBLE);
         btnSignUp.setEnabled(false);
         btnSignUp.setTextColor(Color.argb(50,255,255,255));
+        auth = FirebaseAuth.getInstance();
+        progressBar.setVisibility(View.VISIBLE);
         String emailText = etEmail.getEditText().getText().toString().trim();
         String passwordText = etPassword.getEditText().getText().toString().trim();
         auth.createUserWithEmailAndPassword(emailText, passwordText)
@@ -171,21 +178,66 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         UserDao.addUser(user, new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
+                //// when i create a new email, i will create user wishlist in database
                 Map<String,Object> listSize = new HashMap<>();
                 listSize.put("list_size" , (long) 0);
                 UserDao.addUserWishList(user.getId(), listSize, new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()){
-                            btnSignUp.setEnabled(false);
-                            btnSignUp.setTextColor(Color.argb(50,255,255,255));
-                            progressBar.setVisibility(View.INVISIBLE);
-                            startMainActivity();
-                        }else {
-                            btnSignUp.setEnabled(true);
-                            btnSignUp.setTextColor(Color.rgb(255,255,255));
-                            progressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+                            CollectionReference userDataReferences = firebaseFirestore.collection(USERS_BRANCH).document(firebaseAuth.getUid()).collection(USER_DATA);
+
+                            Map<String , Object> wishlistMap = new HashMap<>();
+                            wishlistMap.put("list_size" , (long) 0 );
+
+                            Map<String , Object> ratingsMap = new HashMap<>();
+                            ratingsMap.put("list_size" , (long) 0 );
+
+                            Map<String , Object> cartMap = new HashMap<>();
+                            cartMap.put("list_size" , (long) 0 );
+
+                            Map<String , Object> myAddressesMap = new HashMap<>();
+                            myAddressesMap.put("list_size" , (long) 0 );
+
+                            final List<Map<String , Object>> documentFields = new ArrayList<>();
+                            documentFields.add(wishlistMap);
+                            documentFields.add(ratingsMap);
+                            documentFields.add(cartMap);
+                            documentFields.add(myAddressesMap);
+
+                            final List<String> documentNames = new ArrayList<>();
+                            documentNames.add("MY_WISHLIST");
+                            documentNames.add("MY_RATINGS");
+                            documentNames.add("MY_CART");
+                            documentNames.add("MY_ADDRESSES");
+
+                            //add user features to data base
+                            for (int i = 0 ; i < documentNames.size() ; i++){
+                                final int finalI = i;
+                                userDataReferences.document(documentNames.get(i))
+                                        .set(documentFields.get(i))
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()){
+                                                    if ( finalI == documentNames.size() - 1) {
+                                                        btnSignUp.setEnabled(false);
+                                                        btnSignUp.setTextColor(Color.argb(50, 255, 255, 255));
+                                                        progressBar.setVisibility(View.INVISIBLE);
+                                                        startMainActivity();
+                                                    }
+                                                }else {
+                                                    btnSignUp.setEnabled(true);
+                                                    btnSignUp.setTextColor(Color.rgb(255,255,255));
+                                                    progressBar.setVisibility(View.INVISIBLE);
+                                                    Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            }
                         }
                     }
                 });

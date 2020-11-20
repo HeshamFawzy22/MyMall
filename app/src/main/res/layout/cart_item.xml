@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/product_image"
         android:layout_width="50dp"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
@@ -61,6 +61,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/remove_item_btn"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="@color/colorAccent"
@@ -87,12 +88,14 @@
 
     <TextView
         android:id="@+id/product_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Google Pixel XL 2 (Mirror Black,128 GB)"
         android:textColor="@color/colorBlack"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/product_image"
         app:layout_constraintTop_toTopOf="@+id/product_image" />
 
@@ -172,7 +175,7 @@
         android:id="@+id/divider6"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
+        android:background="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="@+id/cutted_price"
         app:layout_constraintEnd_toEndOf="@+id/cutted_price"
         app:layout_constraintStart_toStartOf="@+id/cutted_price"

@@ -9,7 +9,9 @@ public class MyDatabase {
     public static final String USERS_BRANCH = "USERS";
     public static final String CATEGORIES_BRANCH = "CATEGORIES";
     public static final String PRODUCTS_BRANCH = "PRODUCTS";
-    public static final String TOP_DEALS_BRANCH = "TOP_DEALS";
+    public static final String QUANTITY_BRANCH = "QUANTITY";
+    public static final String TOP_DEALS = "TOP_DEALS";
+
     private static FirebaseFirestore firebaseFirestore;
     private static FirebaseAuth firebaseAuth;
 
@@ -39,5 +41,4 @@ public class MyDatabase {
     public static CollectionReference getProductsReferences() {
         return getFirestore().collection(PRODUCTS_BRANCH);
     }
-
 }

@@ -37,13 +37,10 @@
                 android:layout_marginStart="4dp"
                 android:textColor="#485f70"
                 android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/my_cart"
-                android:tint="#485f70" />
+                android:textStyle="bold"
+                android:drawablePadding="8dp"
+                android:drawableEnd="@drawable/ic_shopping_cart"
+                android:drawableTint="#616161"/>
 
         </LinearLayout>
         <Button

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.mymall.R;
 import com.example.mymall.models.AddressesModel;
+import com.example.mymall.ui.MyCartFragment;
 
 import java.util.List;
 
@@ -23,11 +24,12 @@ public class Addresses_Adapter extends RecyclerView.Adapter<Addresses_Adapter.Ad
 
     private List<AddressesModel> addressesModelList;
     private int MODE;
-    private int preAddressSelected = -1;
+    private int preAddressSelected;
 
     public Addresses_Adapter(List<AddressesModel> addressesModelList, int MODE) {
         this.addressesModelList = addressesModelList;
         this.MODE = MODE;
+        preAddressSelected = MyCartFragment.selectedAddress;
     }
 
     @NonNull
@@ -42,11 +44,12 @@ public class Addresses_Adapter extends RecyclerView.Adapter<Addresses_Adapter.Ad
 
         AddressesModel addressesModel = addressesModelList.get(position);
         String name = addressesModel.getName();
+        String mobileNo = addressesModel.getMobileNo();
         String address = addressesModel.getAddress();
         String pincode = addressesModel.getPincode();
         Boolean selected = addressesModel.getSelected();
 
-        holder.setData(name, address, pincode, selected, position);
+        holder.setData(name , mobileNo, address, pincode, selected, position);
     }
 
     @Override
@@ -71,8 +74,8 @@ public class Addresses_Adapter extends RecyclerView.Adapter<Addresses_Adapter.Ad
             optionContainer = itemView.findViewById(R.id.option_container);
         }
 
-        private void setData(String userName, String userAddress, String UserPincode, final boolean selected, final int position) {
-            name.setText(userName);
+        private void setData(String userName , String mobileNo, String userAddress, String UserPincode, final boolean selected, final int position) {
+            name.setText(userName + " - " + mobileNo);
             address.setText(userAddress);
             pincode.setText(UserPincode);
 
@@ -92,6 +95,7 @@ public class Addresses_Adapter extends RecyclerView.Adapter<Addresses_Adapter.Ad
                             addressesModelList.get(preAddressSelected).setSelected(false);
                             refreshItem(preAddressSelected, position);
                             preAddressSelected = position;
+                            MyCartFragment.selectedAddress = position;
                         }
                     }
                 });
